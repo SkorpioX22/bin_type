@@ -1,0 +1,288 @@
+:root {
+    --bg-color: #000000;
+    --text-color: #ffffff;
+    --text-rgb: 255, 255, 255;
+    --accent-color: #555555;
+    --font-size: 24px;
+    --zoom-level: 1;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'JetBrains Mono', monospace;
+    overflow: hidden;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    height: 100vh;
+    width: 100vw;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    padding: 40px;
+}
+
+#editor-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    width: 100%;
+    scrollbar-width: none; /* Hide scrollbar Firefox */
+}
+
+#editor-wrapper::-webkit-scrollbar {
+    display: none; /* Hide scrollbar Chrome/Safari */
+}
+
+/* Instruction Popup */
+#instruction-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+#instruction-popup:not(.hidden) {
+    opacity: 0.95;
+    pointer-events: auto;
+}
+
+.instruction-content {
+    text-align: center;
+    max-width: 500px;
+}
+
+.instruction-content h2 {
+    font-size: 14px;
+    letter-spacing: 0.3em;
+    margin-bottom: 40px;
+    opacity: 0.5;
+}
+
+.instruction-content ul {
+    list-style: none;
+    margin-bottom: 40px;
+}
+
+.instruction-content li {
+    font-size: 12px;
+    margin-bottom: 15px;
+    letter-spacing: 0.1em;
+}
+
+.instruction-content li span {
+    opacity: 0.3;
+    margin-right: 15px;
+}
+
+.instruction-content p {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    opacity: 0.3;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#editor {
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    outline: none;
+    font-size: calc(var(--font-size) * var(--zoom-level));
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-word;
+    position: relative;
+    padding: 10vh 0 30vh 0;
+    caret-color: var(--text-color);
+}
+
+/* Character animation */
+.char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(2px);
+    animation: fadeIn 0.3s forwards ease-out;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Serialization Controls */
+#serialization-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#text-code-input {
+    background: transparent;
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 6px 12px;
+    outline: none;
+    width: 120px;
+    opacity: 0.3;
+    transition: opacity 0.3s, width 0.3s;
+}
+
+#text-code-input:focus {
+    opacity: 1;
+    width: 200px;
+}
+
+#export-btn {
+    background: transparent;
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 6px 12px;
+    cursor: pointer;
+    opacity: 0.3;
+    transition: opacity 0.3s, background-color 0.3s, color 0.3s;
+}
+
+#export-btn:hover {
+    opacity: 1;
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+/* UI Overlay */
+#ui-overlay {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(transparent, var(--bg-color) 70%);
+    z-index: 10;
+    pointer-events: none;
+}
+
+#ui-overlay > * {
+    pointer-events: auto;
+}
+
+#alignment-controls button {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-right: 30px;
+    cursor: pointer;
+    opacity: 0.3;
+    transition: opacity 0.3s, transform 0.2s, color 0.5s ease;
+}
+
+#alignment-controls button:hover {
+    opacity: 0.6;
+}
+
+#alignment-controls button.active {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+/* Theme Toggle Switch */
+#theme-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.theme-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    opacity: 0.3;
+    color: var(--text-color);
+    font-family: 'JetBrains Mono', monospace;
+    transition: color 0.5s ease;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 32px;
+    height: 18px;
+}
+
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: .4s;
+    border-radius: 20px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: var(--text-color);
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+/* Hidden input for capturing text */
+#hidden-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}

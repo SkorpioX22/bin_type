@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bin_type</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <div id="instruction-popup" class="hidden">
+            <div class="instruction-content">
+                <h2>BIN_TYPE COMMANDS</h2>
+                <ul>
+                    <li><span>CTRL + /</span> TOGGLE INSTRUCTIONS</li>
+                    <li><span>CTRL + SCROLL</span> ZOOM (0.1X - 50X)</li>
+                    <li><span>COPY CODE</span> EXPORT COMPRESSED TEXT</li>
+                    <li><span>PASTE CODE</span> INSTANT LOAD DOCUMENT</li>
+                    <li><span>THEME TOGGLE</span> DARK / LIGHT MODE</li>
+                </ul>
+                <p>TYPE NATURALLY. FADE IN. FOCUS.</p>
+            </div>
+        </div>
+        <div id="editor-wrapper">
+            <div id="editor" contenteditable="true" spellcheck="false" autofocus></div>
+            <div id="custom-caret"></div>
+        </div>
+        
+        <div id="ui-overlay">
+            <div id="serialization-controls">
+                <input type="text" id="text-code-input" placeholder="PASTE CODE..." spellcheck="false">
+                <button id="export-btn">COPY CODE</button>
+            </div>
+            <div id="alignment-controls">
+                <button data-align="left" class="active">Left</button>
+                <button data-align="center">Center</button>
+                <button data-align="right">Right</button>
+                <button data-align="justify">Justify</button>
+            </div>
+            <div id="theme-controls">
+                <span class="theme-label">Dark</span>
+                <label class="switch">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="theme-label">Light</span>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
