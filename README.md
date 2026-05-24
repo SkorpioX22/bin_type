@@ -1,5 +1,5 @@
 # bin_type
-
+https://skorpiox22.github.io/bin_type/
 A minimalist, high-aesthetic text environment engineered for focus, privacy, and decentralized portability.
 
 ## Overview
